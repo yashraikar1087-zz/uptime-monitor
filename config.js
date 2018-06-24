@@ -8,13 +8,15 @@ var environments = {}
 
 // staging (Default) environment
 environments.staging = {
-  'port' : 3000,
+  'httpPort' : 3000,
+  'httpsPort' : 3001,
   'envName' : 'staging'
 }
 
 //production environment
 environments.production = {
-  'port' : 5000,
+  'httpPort' : 5000,
+  'httpsPort' : 5001,
   'envName' : 'production'
 }
 
@@ -23,7 +25,7 @@ var currentEnvironment = typeof(process.env.NODE_ENV) == 'string' ? process.env.
 
 //check currentEnvironment is one of the environments above,if not ,defualt to staging
 
-var environmentToExport = type(environments[currentEnvironment]) == 'object' ? environments[currentEnvironment] : environments.staging
+var environmentToExport = typeof(environments[currentEnvironment]) == 'object' ? environments[currentEnvironment] : environments.staging
 
 //export the module
 module.exports = environmentToExport
