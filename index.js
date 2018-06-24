@@ -10,6 +10,16 @@ const fs = require('fs')
 //used to get payload
 const StringDecoder = require('string_decoder').StringDecoder
 const config = require('./config')
+const _data = require('./lib/data')
+
+//TEtsing
+//@TODO delete this
+
+_data.delete('test','newFile',function(err){
+  console.log('this was the error ',err)
+
+})
+
 
 
 //Instantiate http server
@@ -19,7 +29,8 @@ const httpServer = http.createServer(function(req,res){
 })
 
 //start the server
-httpServer.listen(config.httpport,function(){
+httpServer.listen(config.httpPort,function(){
+
   console.log("the http server is listening on port "+ config.httpPort)
 })
 
@@ -35,7 +46,7 @@ const httpsServer = https.createServer(httpsServerOptions,function(req,res){
 
 
 //start the https server
-httpsServer.listen(config.httpsport,function(){
+httpsServer.listen(config.httpsPort,function(){
   console.log("the https server is listening on port "+ config.httpsPort)
 })
 
@@ -112,10 +123,9 @@ httpsServer.listen(config.httpsport,function(){
 //define halders
 let handlers = {}
 
-//sample handler
-handlers.sample = function(data,callback){
-  //callback a http status code, and a payload object
-  callback(406,{"name":'sample handler'})
+//ping handlers
+handlers.ping = function (data,callback){
+  callback(200)
 }
 
 //not found handler
@@ -125,5 +135,5 @@ handlers.notFound = function(data,callback){
 
 //define a request router
 let router = {
-  "sample" : handlers.sample
+  "ping" : handlers.ping
 }
