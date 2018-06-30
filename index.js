@@ -7,19 +7,20 @@ const http = require('http')
 const https = require('https')
 const url = require('url')
 const fs = require('fs')
+const handlers = require('./lib/handlers')
 //used to get payload
 const StringDecoder = require('string_decoder').StringDecoder
 const config = require('./config')
-const _data = require('./lib/data')
+// const _data = require('./lib/data')
 
 //TEtsing
 //@TODO delete this
 
-_data.delete('test','newFile',function(err){
-  console.log('this was the error ',err)
-
-})
-
+// _data.delete('test','newFile',function(err){
+//   console.log('this was the error ',err)
+//
+// })
+//
 
 
 //Instantiate http server
@@ -120,20 +121,9 @@ httpsServer.listen(config.httpsPort,function(){
    })
  }
 
-//define halders
-let handlers = {}
-
-//ping handlers
-handlers.ping = function (data,callback){
-  callback(200)
-}
-
-//not found handler
-handlers.notFound = function(data,callback){
-  callback(404)
-}
 
 //define a request router
 let router = {
-  "ping" : handlers.ping
+  "ping" : handlers.ping,
+  "users" : handlers.users
 }
