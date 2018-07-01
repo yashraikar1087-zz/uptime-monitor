@@ -8,9 +8,11 @@ const https = require('https')
 const url = require('url')
 const fs = require('fs')
 const handlers = require('./lib/handlers')
+const helpers = require('./lib/helpers')
 //used to get payload
 const StringDecoder = require('string_decoder').StringDecoder
-const config = require('./config')
+const config = require('./lib/config')
+
 // const _data = require('./lib/data')
 
 //TEtsing
@@ -89,7 +91,7 @@ httpsServer.listen(config.httpsPort,function(){
      'queryStringObject' : queryStringObject,
      'method' : method,
      'headers' : headers,
-     'payload' :buffer
+     'payload' :helpers.parseJsonToObject(buffer)
    }
 
    //route the request to the handler specified in the router
@@ -125,5 +127,6 @@ httpsServer.listen(config.httpsPort,function(){
 //define a request router
 let router = {
   "ping" : handlers.ping,
-  "users" : handlers.users
+  "users" : handlers.users,
+  "tokens" : handlers.tokens
 }
